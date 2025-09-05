@@ -15,7 +15,6 @@
             margin: 0;
             color: #333;
             padding: 20px;
-            box-sizing: border-box; /* Ensures padding doesn't cause overflow */
         }
 
         .container {
@@ -81,7 +80,7 @@
             border: 1px solid #bbdefb;
             padding: 20px;
             border-radius: 12px;
-            display: none; /* Initially hidden */
+            display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
@@ -149,31 +148,27 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>URL Shortener</h1>
-        <form id="url-form">
+    <form method="POST">
+        <div class="container">
+            <h1>URL Shortener</h1>
             <div class="input-container">
                 <input type="url" id="long-url" name="url" class="url" placeholder="Enter your long URL here" required>
                 <button type="submit" id="shorten-btn">Shorten URL</button>
             </div>
-        </form>
-        
-        <div class="result-container" id="result-container">
-            <p>Your shortened URL is:</p>
-            <a href="#" id="short-url" target="_blank"></a>
-            <button type="button" class="copy-btn" onclick="copyUrl()">Copy URL</button>
+            
+            {% if shortened_url %}
+            <div class="result-container">
+                <p>Your shortened URL is:</p>
+                <a href="{{ shortened_url }}" id="short-url" target="_blank">{{ shortened_url }}</a>
+                <button type="button" class="copy-btn" onclick="copyUrl()">Copy URL</button>
+            </div>
+            {% endif %}
         </div>
-    </div>
+    </form>
     
     <div id="message-box" class="message-box"></div>
 
     <script>
-        const urlForm = document.getElementById('url-form');
-        const longUrlInput = document.getElementById('long-url');
-        const resultContainer = document.getElementById('result-container');
-        const shortUrlLink = document.getElementById('short-url');
-        const shortenBtn = document.getElementById('shorten-btn');
-
         function showMessage(message) {
             const messageBox = document.getElementById('message-box');
             messageBox.textContent = message;
@@ -183,37 +178,10 @@
             }, 3000);
         }
 
-        urlForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const longUrl = longUrlInput.value;
-            shortenBtn.textContent = 'Shortening...';
-            shortenBtn.disabled = true;
-            resultContainer.style.display = 'none';
-
-            try {
-                const response = await fetch(`https://api.shrtco.de/v2/shorten?url=${longUrl}`);
-                const data = await response.json();
-
-                if (data.ok) {
-                    const shortenedUrl = data.result.full_short_link;
-                    shortUrlLink.href = shortenedUrl;
-                    shortUrlLink.textContent = shortenedUrl;
-                    resultContainer.style.display = 'flex';
-                } else {
-                    showMessage('Error: ' + data.error);
-                    resultContainer.style.display = 'none';
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-                showMessage('An unexpected error occurred.');
-            } finally {
-                shortenBtn.textContent = 'Shorten URL';
-                shortenBtn.disabled = false;
-            }
-        });
-
+        // Function to copy the short URL to the clipboard
         function copyUrl() {
-            const urlToCopy = shortUrlLink.textContent;
+            const urlElement = document.getElementById('short-url');
+            const urlToCopy = urlElement.innerText;
             
             const tempInput = document.createElement('input');
             tempInput.value = urlToCopy;
