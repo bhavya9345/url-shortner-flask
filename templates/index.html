@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener</title>
+    <title>Advanced URL Shortener</title>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -41,7 +41,7 @@
             margin-bottom: 25px;
         }
 
-        .url {
+        .url, .service-selector {
             padding: 14px 18px;
             border: 1px solid #e0e0e0;
             border-radius: 12px;
@@ -51,7 +51,7 @@
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        .url:focus {
+        .url:focus, .service-selector:focus {
             outline: none;
             border-color: #64b5f6;
             box-shadow: 0 0 8px rgba(100, 181, 246, 0.4);
@@ -72,7 +72,7 @@
         #shorten-btn:hover {
             background-color: #1e88e5;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .result-container {
@@ -139,20 +139,44 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             font-size: 1em;
-            pointer-events: none; /* Allows clicks to pass through */
+            pointer-events: none;
         }
 
         .message-box.show {
             opacity: 1;
+        }
+        
+        /* Responsive CSS */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .input-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .url, .service-selector, #shorten-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <form method="POST">
         <div class="container">
-            <h1>URL Shortener</h1>
+            <h1>Advanced URL Shortener</h1>
             <div class="input-container">
                 <input type="url" id="long-url" name="url" class="url" placeholder="Enter your long URL here" required>
+                <select name="service_provider" class="url service-selector">
+                    <option value="tinyurl">TinyURL</option>
+                    <option value="isgd">Is.gd</option>
+                    <option value="dagd">Da.gd</option>
+                    <option value="osdb">Os.db</option>
+                </select>
+
                 <button type="submit" id="shorten-btn">Shorten URL</button>
             </div>
             
@@ -178,7 +202,6 @@
             }, 3000);
         }
 
-        // Function to copy the short URL to the clipboard
         function copyUrl() {
             const urlElement = document.getElementById('short-url');
             const urlToCopy = urlElement.innerText;
