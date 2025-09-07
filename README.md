@@ -22,11 +22,6 @@ Easily convert long, messy URLs into short, shareable links in just one click.
 
 ---
 
-## 📸 Screenshots  
-👉 *(Add your app screenshot here for better presentation — e.g., `static/demo.png`)*  
-
----
-
 ## ⚡ Installation & Usage
 
 1. **Clone the repository**
@@ -56,6 +51,9 @@ Easily convert long, messy URLs into short, shareable links in just one click.
    ```bash
    http://127.0.0.1:5000/
    ```
+
+---
+
 ## 📂 Project Structure
 
 flask-url-shortener/
@@ -65,10 +63,14 @@ flask-url-shortener/
 │── requirements.txt    # Dependencies
 │── README.md           # Project documentation
 
+---
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
 Feel free to open a PR or submit issues.
+
+---
 
 <p align="center">  
   Made with ❤️ using <b>Flask</b> | <i>EOF</i>  
