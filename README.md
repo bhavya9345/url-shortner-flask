@@ -54,17 +54,6 @@ Easily convert long, messy URLs into short, shareable links in just one click.
 
 ---
 
-## 📂 Project Structure
-
-flask-url-shortener/
-│── app.py              # Main Flask application
-│── templates/
-│   └── index.html      # HTML template
-│── requirements.txt    # Dependencies
-│── README.md           # Project documentation
-
----
-
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
